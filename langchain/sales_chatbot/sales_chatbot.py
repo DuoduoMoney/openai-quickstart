@@ -6,11 +6,10 @@ from langchain.chains import RetrievalQA
 from langchain_community.chat_models import ChatOpenAI
 
 import os
-os.environ['OPENAI_API_KEY'] = ""
+os.getenv("OPENAI_API_KEY")
 
 def initialize_sales_bot(vector_store_dir: str="./langchain/sales_chatbot/law_QA"):
 #def initialize_sales_bot(vector_store_dir: str="./langchain/sales_chatbot/real_estates_sale"):
-#def initialize_sales_bot():
     db = FAISS.load_local(vector_store_dir, OpenAIEmbeddings(),allow_dangerous_deserialization=True)
     llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
     
