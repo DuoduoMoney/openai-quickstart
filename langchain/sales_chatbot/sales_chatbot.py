@@ -5,11 +5,17 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.chains import RetrievalQA
 # from langchain.chat_models import ChatOpenAI
+from langchain_openai import OpenAIEmbeddings
+from langchain_community.vectorstores import FAISS
+from langchain.chains import RetrievalQA
 from langchain_community.chat_models import ChatOpenAI
 
+import os
+os.getenv("OPENAI_API_KEY")
 
-def initialize_sales_bot(vector_store_dir: str="real_estates_sale"):
-    db = FAISS.load_local(vector_store_dir, OpenAIEmbeddings())
+def initialize_sales_bot(vector_store_dir: str="./langchain/sales_chatbot/law_QA"):
+#def initialize_sales_bot(vector_store_dir: str="./langchain/sales_chatbot/real_estates_sale"):
+    db = FAISS.load_local(vector_store_dir, OpenAIEmbeddings(),allow_dangerous_deserialization=True)
     llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
     
     global SALES_BOT    
@@ -36,13 +42,13 @@ def sales_chat(message, history):
         return ans["result"]
     # 否则输出套路话术
     else:
-        return "这个问题我要问问领导"
+        return "这个问题我要问问法官！"
     
 
 def launch_gradio():
     demo = gr.ChatInterface(
         fn=sales_chat,
-        title="房产销售",
+        title="法律顾问助手，如需专业服务，请联系缪律师！",
         # retry_btn=None,
         # undo_btn=None,
         chatbot=gr.Chatbot(height=600),
