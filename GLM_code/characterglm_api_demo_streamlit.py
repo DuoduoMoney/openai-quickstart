@@ -89,7 +89,7 @@ def verify_meta() -> bool:
 
 image_style = st.radio(
     "请选择生成风格:",
-    ('动漫', '简笔', '油画', '水墨'),  # 暂支持四种风格，动漫为默认
+    ('二次元', '古风', '山水画', '科技',"中世纪"),  # 支持多种风格，二次元为默认
     index=0
 )
 
@@ -116,7 +116,7 @@ def draw_new_image():
     
     # TODO: 加上风格选项
     # image_prompt = '二次元风格。' + image_prompt.strip()
-    style = f"{image_style}风格。"  # 二次元风格。
+    style = f"{image_style}风格。" 
     image_prompt = style + image_prompt.strip()
 
     print(f"image_prompt = {image_prompt}")
